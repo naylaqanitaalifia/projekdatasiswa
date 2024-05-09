@@ -3,5 +3,5 @@ session_start();
 
 session_destroy();
 
-header("Location: session1.php")
+header("Location: https://naylaqanitaalifia.000webhostapp.com/session1.php")
 ?>
