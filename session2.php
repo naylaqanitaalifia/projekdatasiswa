@@ -2,29 +2,29 @@
 
 session_start();
 
-    if (!isset($_SESSION["dataSiswa"])) {
-        $_SESSION["dataSiswa"] = array();
-    }
+if (!isset($_SESSION["dataSiswa"])) {
+    $_SESSION["dataSiswa"] = array();
+}
 
-    if (isset($_POST["nama"]) && isset($_POST["nis"]) && isset($_POST["rombel"]) && isset($_POST["rayon"])) {
-        $data = array(
-            "nama" => $_POST["nama"],
-            "nis" => $_POST["nis"],
-            "rombel" => $_POST["rombel"],
-            "rayon" => $_POST["rayon"]
-        );
-        array_push($_SESSION["dataSiswa"], $data);
-        header("Location: https://naylaqanitaalifia.000webhostapp.com/session1.php");
-        exit;
-    }
+if (isset($_POST["nama"]) && isset($_POST["nis"]) && isset($_POST["rombel"]) && isset($_POST["rayon"])) {
+    $data = array(
+        "nama" => $_POST["nama"],
+        "nis" => $_POST["nis"],
+        "rombel" => $_POST["rombel"],
+        "rayon" => $_POST["rayon"]
+    );
+    array_push($_SESSION["dataSiswa"], $data);
+    header("Location: session1.php");
+    exit;
+}
 
-    // proses hapus data
-    if (isset($_GET["hapus"])) {
-        $index = $_GET["hapus"];
-        unset($_SESSION["dataSiswa"][$index]);
-        header("Location: https://naylaqanitaalifia.000webhostapp.com/session2.php");
-        exit;
-    }
+// proses hapus data
+if (isset($_GET["hapus"])) {
+    $index = $_GET["hapus"];
+    unset($_SESSION["dataSiswa"][$index]);
+    header("Location: session2.php");
+    exit;
+}
 
 ?>
 
@@ -50,9 +50,7 @@ session_start();
 <div class="container my-5">
     <h1 class="mt-4 mb-4 fw-bold">Data Siswa</h1>
     
-    <!-- START PHP -->
     <?php
-
     echo "<table class='table' align='center'>
             <thead class='table-light'>
               <tr>
@@ -76,12 +74,13 @@ session_start();
               </tr>";
       }
     }
-    
     echo "</tbody></table>";
     ?>
-    <!-- END PHP -->
 
-    <a href="session1.php" class="btn btn-primary back mt-4 mb-3"><i class="bi bi-box-arrow-left"></i> Kembali</a>
+    <div class="form-group d-flex justify-content-between">
+      <a href="session1.php" class="btn btn-primary back float-start"><i class="bi bi-box-arrow-left float-left"></i> Kembali</a>
+      <a href="#" class="btn btn-secondary float-end" name="cetak" id="cetak"><i class="bi bi-printer"></i>Cetak</a>
+    </div>
   </div>
 
   <!-- Optional JavaScript -->
@@ -90,7 +89,10 @@ session_start();
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-cdLknYM5ZVlo//fubJssFbFb39YNDrRftmXQuC41qUcb7wk5jok90Ks6voXxImFc" crossorigin="anonymous"></script>
 
   <script>
-    // JavaScript code here
+    document.getElementById("cetak").addEventListener("click", function(event) {
+      event.preventDefault();
+      window.print();
+    })
   </script>
 </body>
 </html>

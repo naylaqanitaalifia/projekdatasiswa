@@ -2,29 +2,28 @@
 
 session_start();
 
-    if (!isset($_SESSION["dataSiswa"])) {
-        $_SESSION["dataSiswa"] = array();
-    }
+if (!isset($_SESSION["dataSiswa"])) {
+    $_SESSION["dataSiswa"] = array();
+}
 
-    if (isset($_POST["nama"]) && isset($_POST["nis"]) && isset($_POST["rombel"]) && isset($_POST["rayon"])) {
-        $data = array(
-            "nama" => $_POST["nama"],
-            "nis" => $_POST["nis"],
-            "rombel" => $_POST["rombel"],
-            "rayon" => $_POST["rayon"]
-        );
-        array_push($_SESSION["dataSiswa"], $data);
-        header("Location: https://naylaqanitaalifia.000webhostapp.com/session1.php");
-        exit;
-    }
+if (isset($_POST["nama"]) && isset($_POST["nis"]) && isset($_POST["rombel"]) && isset($_POST["rayon"])) {
+    $data = array(
+        "nama" => $_POST["nama"],
+        "nis" => $_POST["nis"],
+        "rombel" => $_POST["rombel"],
+        "rayon" => $_POST["rayon"]
+    );
+    array_push($_SESSION["dataSiswa"], $data);
+    header("Location: session1.php");
+    exit;
+}
 
- 
-    if (isset($_GET["hapus"])) {
-        $index = $_GET["hapus"];
-        unset($_SESSION["dataSiswa"][$index]);
-        header("Location: https://naylaqanitaalifia.000webhostapp.com/session1.php");
-        exit;
-    }
+if (isset($_GET["hapus"])) {
+    $index = $_GET["hapus"];
+    unset($_SESSION["dataSiswa"][$index]);
+    header("Location: session1.php");
+    exit;
+}
 
 ?>
 
@@ -89,7 +88,13 @@ session_start();
 
       <div class="form-group mb-4 justify-content-center">
         <button type="submit" class="btn btn-success mt-3 mb-4" name="kirim" value="kirim"><i class="bi bi-file-earmark-plus"></i> Tambah</button>
-        <a href="session2.php" class="btn btn-primary mt-3 mb-4" target="_blank"><i class='bi bi-printer'></i> Cetak</a>
+        <?php 
+        if (!empty($_SESSION["dataSiswa"])) {
+          echo "<a href='session2.php' class='btn btn-primary mt-3 mb-4' target='_blank'><i class='bi bi-printer'></i> Cetak</a>";
+        } else {
+          echo "<a href='session2.php' class='btn btn-primary mt-3 mb-4 disabled ' target='_blank'><i class='bi bi-printer'></i> Cetak</a>";
+        }
+        ?>
         <a href="session3.php" class="btn btn-danger mt-3 mb-4"><i class='bi bi-trash'></i> Hapus Semua</a>
       </div>
     </form>
@@ -119,6 +124,10 @@ session_start();
                 <td><a href='?hapus=".$index."' class='btn btn-danger'><i class='bi bi-trash'></i> Hapus</a></td>
               </tr>";
       }
+    } else {
+      echo "<tr>
+              <td colspan='5' class='text-danger'>Tidak ada data!</td>
+            </tr>";
     }
     
     echo "</tbody></table>";
